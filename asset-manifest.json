@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/sotter.co/static/css/main.3a1ffbf5.css",
+    "main.js": "/sotter.co/static/js/main.b813922b.js",
+    "index.html": "/sotter.co/index.html",
+    "main.3a1ffbf5.css.map": "/sotter.co/static/css/main.3a1ffbf5.css.map",
+    "main.b813922b.js.map": "/sotter.co/static/js/main.b813922b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a1ffbf5.css",
+    "static/js/main.b813922b.js"
+  ]
+}
