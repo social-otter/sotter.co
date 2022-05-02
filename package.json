@@ -1,7 +1,7 @@
 {
   "name": "sotter.co",
   "version": "0.1.0",
-  "homepage": "https://social-otter.github.io/sotter.co",
+  "homepage": "https://sotter.co",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.6.0",
