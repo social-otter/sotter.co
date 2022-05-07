@@ -1,47 +1,9 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  const colors = require('tailwindcss/colors')
-  
-  module.exports = {
-    // ...
-    theme: {
-      extend: {
-        colors: {
-          rose: colors.rose,
-        },
-      },
-    },
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
 import { signInWithGoogle, signInWithMicrosoft, signInWithGithub } from '../Auth';
-
-// const stats = [
-//   { label: 'Founded', value: '2021' },
-//   { label: 'Employees', value: '5' },
-//   { label: 'Beta Users', value: '521' },
-//   { label: 'Raised', value: '$25M' },
-// ]
-// const logos = [
-//   { name: 'Transistor', url: 'https://tailwindui.com/img/logos/transistor-logo-gray-400.svg' },
-//   { name: 'Mirage', url: 'https://tailwindui.com/img/logos/mirage-logo-gray-400.svg' },
-//   { name: 'Tuple', url: 'https://tailwindui.com/img/logos/tuple-logo-gray-400.svg' },
-//   { name: 'Laravel', url: 'https://tailwindui.com/img/logos/laravel-logo-gray-400.svg' },
-//   { name: 'StaticKit', url: 'https://tailwindui.com/img/logos/statickit-logo-gray-400.svg' },
-//   { name: 'Workcation', url: 'https://tailwindui.com/img/logos/workcation-logo-gray-400.svg' },
-// ]
+import { useNavigate } from "react-router-dom"
 
 export default function Landing() {
+  const navigate = useNavigate();
+
   return (
     <div className="h-screen flex flex-col bg-gradient-to-r from-indigo-100 via-white to-pink-100">
       <main className='mb-auto'>
@@ -139,7 +101,7 @@ export default function Landing() {
                       <div>
                         <button
                           type="submit"
-                          onClick={() => }
+                          onClick={() => navigate("/app")}
                           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                           Sign in
