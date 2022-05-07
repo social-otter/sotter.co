@@ -122,3 +122,7 @@ export const currentUser = () => {
     return user
   }
 }
+
+export const isUserLoggedIn = () => {
+  return auth.currentUser !== null
+}

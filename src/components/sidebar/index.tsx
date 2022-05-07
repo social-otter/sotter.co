@@ -19,10 +19,6 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
   { name: 'Workflows', href: '#', icon: CollectionIcon, current: false },
   { name: 'API Integration', href: '#', icon: CodeIcon, current: false },
-  // { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  // { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  // { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-  // { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
 
 function classNames(...classes: any) {
@@ -70,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+              <div className="relative flex-1 flex flex-col max-w-xs w-full">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -212,7 +208,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             </button>
           </div>
 
-          <main className="flex-1 bg-white dark:bg-gray-100">
+          <main className="flex-1 dark:bg-gray-100">
             <div className="py-6">
               {children}
             </div>

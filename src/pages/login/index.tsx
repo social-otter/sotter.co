@@ -1,4 +1,4 @@
-import { signInWithGoogle, signInWithMicrosoft, signInWithGithub } from '../../Auth';
+import { signInWithGoogle, signInWithMicrosoft, signInWithGithub } from '../../auth';
 
 export default function SingIn() {
   return (
