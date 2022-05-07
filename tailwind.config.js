@@ -3,19 +3,16 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/flowbite/**/*.js"
   ],
-  theme: {
-    colors: {
-      'otter': {
-        100: '#ffd204',
-        200: '#3f3711',
-      },
-    },
-    extend: {},
-  },
+  // theme: {
+  //   colors: {
+  //   },
+  //   extend: {},
+  // },
   plugins: [
-    require('flowbite/plugin')
+    require('flowbite/plugin'),
+    require('@tailwindcss/forms')
   ],
-  // darkMode: 'class',
-  darkMode: 'media',
+  darkMode: 'class',
+  // darkMode: 'media',
   variants: {},
 }
