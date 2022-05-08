@@ -1,4 +1,4 @@
-import { signInWithGoogle, signInWithGithub, signInWithMicrosoft, isUserLoggedIn } from '../../auth/index'
+import { signInWithGoogle, signInWithGithub, signInWithMicrosoft } from '../../auth/index'
 
 
 const SignIn = () => {

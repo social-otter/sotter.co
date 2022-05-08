@@ -5,7 +5,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   OAuthProvider,
-  GithubAuthProvider
+  GithubAuthProvider,
+  User
 } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, getDocs } from "firebase/firestore"
@@ -28,7 +29,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app)
-const auth = getAuth(app);
+export const auth = getAuth(app);
 const providerGoogle = new GoogleAuthProvider();
 const providerMicrosoft = new OAuthProvider('microsoft.com');
 const providerGithub = new GithubAuthProvider();
@@ -39,90 +40,128 @@ providerMicrosoft.setCustomParameters({
 });
 
 
+export interface IUserResult {
+  succeed?: boolean;
+  user?: User;
+  error?: any;
+}
+
+
 export const getAllUsers = async () => {
-    const usersCollection = collection(db, 'users');
-    const usersSnapshot = await getDocs(usersCollection);
-    const myList = usersSnapshot.docs.map(doc => doc.data());
-    return myList
+  const usersCollection = collection(db, 'users');
+  const usersSnapshot = await getDocs(usersCollection);
+  const myList = usersSnapshot.docs.map(doc => doc.data());
+  return myList
 }
 
 
-export const signInWithGoogle = () => {
-    signInWithPopup(auth, providerGoogle)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        console.log('Credential', credential);
-        if (credential) {
-            const token = credential.accessToken;
-            console.log('Token', token);
-        }
-        // The signed-in user info.
-        const user = result.user;
-        console.log('User', user);
-        // ...
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-}
-
-
-export const signInWithMicrosoft = () => {
-  signInWithPopup(auth, providerMicrosoft)
+export const signInWithGoogle = async () => {
+  const userResult: IUserResult = {};
+  await signInWithPopup(auth, providerGoogle)
     .then((result) => {
+      console.log('Firebase Result', result)
 
-      const credential = OAuthProvider.credentialFromResult(result);
-      if (credential) {
-        console.log(credential);
-        // const accessToken = credential.accessToken;
-        // const idToken = credential.idToken;
-        const user = result.user;
-        console.log('User', user);
-      }
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      // console.log('Credential', credential);
+      // if (credential) {
+      // const token = credential.accessToken;
+      // console.log('Result', JSON.stringify(result));
+      // }
+      // The signed-in user info.
+      userResult.succeed = true;
+      userResult.user = result.user;
       // ...
     }).catch((error) => {
-      console.error(error);
+      userResult.succeed = false;
+      userResult.error = error;
+
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
     });
+
+  return userResult;
 }
 
 
-export const signInWithGithub = () => {
-  signInWithPopup(auth, providerGithub)
+export const signInWithMicrosoft = async () => {
+  const userResult: IUserResult = {};
+
+  await signInWithPopup(auth, providerMicrosoft)
     .then((result) => {
+      console.log('Firebase Result', result)
+
+      const credential = OAuthProvider.credentialFromResult(result);
+      // if (credential) {
+      //   console.log(credential);
+      //   // const accessToken = credential.accessToken;
+      //   // const idToken = credential.idToken;
+      //   const user = result.user;
+      //   console.log('User', user);
+      // }
+      userResult.succeed = true;
+      userResult.user = result.user;
+      // ...
+    }).catch((error) => {
+      userResult.succeed = false;
+      userResult.error = error;
+
+      console.error(error);
+    });
+
+  return userResult;
+}
+
+
+export const signInWithGithub = async () => {
+  const userResult: IUserResult = {};
+
+  await signInWithPopup(auth, providerGithub)
+    .then((result) => {
+      console.log('Firebase Result', result)
 
       // This gives you a GitHub Access Token. You can use it to access the GitHub API.
       const credential = GithubAuthProvider.credentialFromResult(result);
-      
-      if (credential) {
-        console.log(credential);
-        // const accessToken = credential.accessToken;
-        // const idToken = credential.idToken;
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        console.log('User', user);  
-      }
+
+      // if (credential) {
+      //   console.log(credential);
+      //   // const accessToken = credential.accessToken;
+      //   // const idToken = credential.idToken;
+      //   const token = credential.accessToken;
+      //   // The signed-in user info.
+      //   const user = result.user;
+      //   console.log('User', user);
+      // }
+      userResult.succeed = true;
+      userResult.user = result.user;
       // ...
     }).catch((error) => {
+      userResult.succeed = false;
+      userResult.error = error;
+
       console.error(error);
     });
+  
+  return userResult;
 }
 
 
-export const currentUser = () => {
-  const user = auth.currentUser;
-  if (user !== null) {
-    return user
-  }
-}
+// onAuthStateChanged(auth, (user) => {
+//   console.log('onAuthStateChanged', user)
 
-export const isUserLoggedIn = () => {
-  return auth.currentUser !== null
-}
+//   if (user) {
+//     // User is signed in, see docs for a list of available properties
+//     // https://firebase.google.com/docs/reference/js/firebase.User
+//     const uid = user.uid;
+//     // ...
+//   } else {
+//     // User is signed out
+//     // ...
+//   }
+// });

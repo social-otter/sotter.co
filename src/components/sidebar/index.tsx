@@ -1,24 +1,21 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
   HomeIcon,
-  InboxIcon,
   MenuIcon,
-  UsersIcon,
   XIcon,
   CodeIcon,
   CollectionIcon
 } from '@heroicons/react/outline'
+import { auth } from '../../auth'
 
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Workflows', href: '#', icon: CollectionIcon, current: false },
-  { name: 'API Integration', href: '#', icon: CodeIcon, current: false },
+  { name: 'Dashboard', href: '/#/app/dashboard', icon: HomeIcon, current: true },
+  { name: 'Trackings', href: '/#/app/trackings', icon: CollectionIcon, current: false },
+  { name: 'Webhook', href: '/#/app/webhook', icon: CodeIcon, current: false },
+  { name: 'Sample', href: '/#/app/sample', icon: CodeIcon, current: false },
 ]
 
 function classNames(...classes: any) {
@@ -29,9 +26,28 @@ interface SidebarProps {
   children: React.ReactNode;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+// interface UserInfo {
+//   uid?: string;
+//   displayName?: string;
+//   photoURL?: string;
+// }
 
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>({});
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      let data = {
+        uid: user?.uid || "",
+        displayName: user?.displayName || "",
+        photoURL: user?.photoURL || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      };
+      setUserInfo(data)
+    })
+  }, [])
+  
 
   return (
     <>
@@ -66,7 +82,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <div className="relative flex-1 flex flex-col max-w-xs w-full">
+              <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -125,12 +141,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                       <div>
                         <img
                           className="inline-block h-10 w-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          src={userInfo.photoURL}
                           alt=""
                         />
                       </div>
                       <div className="ml-3">
-                        <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">Tom Cook</p>
+                        <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">{userInfo.displayName}</p>
                         <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
                       </div>
                     </div>
@@ -177,17 +193,17 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               </nav>
             </div>
             <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-              <a href="#" className="flex-shrink-0 w-full group block">
+              <a className="flex-shrink-0 w-full group block">
                 <div className="flex items-center">
                   <div>
                     <img
                       className="inline-block h-9 w-9 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src={userInfo.photoURL}
                       alt=""
                     />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">Tom Cook</p>
+                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">{userInfo.displayName}</p>
                     <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
                   </div>
                 </div>

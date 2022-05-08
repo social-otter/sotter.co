@@ -5,7 +5,7 @@ import Login from "../../components/login";
 export default function Landing() {
 
   return (
-    <div className="h-screen flex mb-10 flex-col bg-gradient-to-r from-indigo-100 via-white to-pink-100">
+    <div className="flex mb-10 flex-col bg-gradient-to-r from-indigo-100 via-white to-pink-100">
       <main className='mb-auto'>
         <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-48">
           <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
