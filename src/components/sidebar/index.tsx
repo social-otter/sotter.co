@@ -6,10 +6,11 @@ import {
   MenuIcon,
   XIcon,
   CodeIcon,
-  CollectionIcon
+  CollectionIcon,
+  LogoutIcon
 } from '@heroicons/react/outline'
 import { auth } from '../../auth'
-
+import { useAuth } from '../../contexts/AuthContext'
 
 const navigation = [
   { name: 'Dashboard', href: '/#/app/dashboard', icon: HomeIcon, current: true },
@@ -36,6 +37,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
+  const { logout } = useAuth();
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -47,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       setUserInfo(data)
     })
   }, [])
-  
+
 
   return (
     <>
@@ -147,7 +149,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                       </div>
                       <div className="ml-3">
                         <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">{userInfo.displayName}</p>
-                        <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
+                        <p onClick={() => logout()} className="text-xs font-medium text-gray-500 group-hover:text-gray-700">Logout</p>
                       </div>
                     </div>
                   </a>
@@ -204,7 +206,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">{userInfo.displayName}</p>
-                    <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
+                    <p onClick={() => logout()} className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                      Logout
+                      {/* <LogoutIcon className='text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6' aria-hidden="true"/> */}
+                    </p>
                   </div>
                 </div>
               </a>

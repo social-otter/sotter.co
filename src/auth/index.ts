@@ -6,10 +6,12 @@ import {
   GoogleAuthProvider,
   OAuthProvider,
   GithubAuthProvider,
-  User
+  User,
+  signOut
 } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, getDocs } from "firebase/firestore"
+import { useNavigate } from "react-router-dom";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 

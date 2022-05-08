@@ -17,30 +17,38 @@ const Login = () => {
         })
     }, [])
 
+    const handleSignInButton = () => {
+        if (currentUser) {
+            navigate('/app/dashboard')
+        }
+        else {
+            setOpen(true)
+        }
+    }
 
     const handleLoginError = (error: any) => {
         console.error('Wooopps! Something went wrong.')
         console.error(error)
     }
-    
-    const handleLoginResult = (result: IUserResult) => {    
+
+    const handleLoginResult = (result: IUserResult) => {
         console.info('Handle Login Result', result);
 
         if (result.succeed) {
             navigate('/app/dashboard')
-        }else {
+        } else {
             handleLoginError(result.error)
         }
     }
-    
+
     const handleLogin = async (provider: any) => {
-        if (provider == 'google'){
+        if (provider == 'google') {
             handleLoginResult(await signInWithGoogle())
         }
-        if (provider == 'github'){
+        if (provider == 'github') {
             handleLoginResult(await signInWithGithub())
         }
-        if (provider == 'microsoft'){
+        if (provider == 'microsoft') {
             handleLoginResult(await signInWithMicrosoft())
         }
     }
@@ -64,7 +72,6 @@ const Login = () => {
                         </span>
                         <span className='basis-2/4'>
                             Sign up with Google
-                            {/* {`Sign ${isSignIn ? '': ''} up with Google`} */}
                         </span>
                     </button>
 
@@ -84,13 +91,15 @@ const Login = () => {
                 </div>
 
                 <div className="relative mt-8 mb-5">
-                    <h1 className="text-sm text-center mb-2 font-black text-gray-500">Already have an account?</h1>
+                    {!currentUser && <>
+                        <h1 className="text-sm text-center mb-2 font-black text-gray-500">Already have an account?</h1>
+                    </>}
                 </div>
 
                 <div>
                     <button
                         type="submit"
-                        onClick={() => setOpen(true)}
+                        onClick={handleSignInButton}
                         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         {currentUser ? 'Welcome back! Open the app' : 'Sign in'}
@@ -125,9 +134,7 @@ const Login = () => {
                                     leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                                 >
                                     <div className="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
-
                                         <div>
-
                                             <div className="mt-3 text-center sm:mt-5">
                                                 <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
                                                     Sign into your account.

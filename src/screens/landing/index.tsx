@@ -1,7 +1,6 @@
 import styles from './index.module.css';
 import Login from "../../components/login";
 
-
 export default function Landing() {
 
   return (
